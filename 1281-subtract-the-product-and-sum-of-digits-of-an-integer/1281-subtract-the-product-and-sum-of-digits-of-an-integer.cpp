@@ -11,7 +11,7 @@ public:
             int lastDigit = m % 10;
             sum += lastDigit;
             product *= lastDigit;
-            m = m / 10;
+            m = m/10;
         }
         return (product - sum);
     }
