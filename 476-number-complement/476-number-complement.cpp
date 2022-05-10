@@ -10,7 +10,7 @@ public:
         
         while(n!=0){
             
-            mask = (mask<<1) | 1;
+            mask = (mask<<1)|1;
             n = n>>1;
         }
         
