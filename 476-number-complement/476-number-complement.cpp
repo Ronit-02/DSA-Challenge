@@ -14,6 +14,6 @@ public:
             n = n>>1;
         }
         
-        return mask & (~num);
+        return (mask & (~num));
     }
 };
