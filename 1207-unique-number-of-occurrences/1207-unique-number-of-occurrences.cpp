@@ -4,7 +4,7 @@ public:
         
         map<int, int> mp;
         for(int x : arr){
-            mp[x]++;
+            mp[x]+=1;
         }
         
         set<int> st;    
