@@ -1,21 +1,23 @@
 class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) {
-  
-        map<int, int> mp;
         
-        //frequencies stored in map
-        for(int i=0; i<nums.size(); i++){
-            mp[nums[i]]++;
+        int n=nums.size();
+        vector<int>res(n+1,0);
+        vector <int> ans;
+        for(int i: nums)
+        {
+                res[i]++;
         }
-    
-        //checking for value 2 in map (which represent freq)
-        vector<int> ans;
-        for(auto itr = mp.begin(); itr!=mp.end(); itr++){
-            if(itr->second == 2)
-                ans.push_back(itr->first);
+        
+        for(int i=0;i<res.size();i++)
+        {
+            if(res[i]==2)
+            {
+                ans.push_back(i);
+            }
+            
         }
-
         return ans;
     }
 };
