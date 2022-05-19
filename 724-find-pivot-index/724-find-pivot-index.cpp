@@ -3,7 +3,6 @@ public:
     int pivotIndex(vector<int>& arr) {
         
         int n = arr.size();
-        int ans = -1;
         
         int sum = 0;
         for(int i=0; i<n; i++){
@@ -14,12 +13,11 @@ public:
         for(int i=0; i<n; i++){
             
             if( sum-pre-arr[i] == pre ){
-                ans = i;
-                break;
+                return i;
             }
             pre += arr[i];
         }
         
-        return ans;
+        return -1;
     }
 };
