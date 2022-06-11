@@ -4,18 +4,13 @@ public:
         
         int n = arr.size();
         
-        for(int i=0; i<n; ++i){
+        int i = 0;
+        for(int j=0; j<n; ++j){
             
-            if(arr[i] == 0){    // if there is a zero
-                
-                for(int j=i+1; j<n; ++j){           // swap it with the next non-zero    
-                    
-                    if(arr[j] != 0){ 
-                        swap(arr[i], arr[j]);
-                        break;
-                    }
-                }
-             }
+            if(arr[j] != 0){
+                swap(arr[i], arr[j]);
+                i++;
+            }
         }
     }
 };
