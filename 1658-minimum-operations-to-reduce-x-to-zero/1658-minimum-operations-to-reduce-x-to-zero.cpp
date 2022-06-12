@@ -30,17 +30,21 @@ public:
         
         int n = arr.size();
         
-        int arrsum = 0;
+        int arrsum = 0;               // calculating sum of array
         for(int i=0; i<n; ++i){
             arrsum += arr[i];
         }
         
-        if(arrsum == x)
+        if(arrsum == x)       // all elements used
             return n;
         
-        int maxlen = lenOfLongSubarr(arr, n, arrsum - x);
+        // maxlen will store max len of subarray having sum (arrsum - x)
+        // so that we can get min len of subarray havin sum (x)
         
-        if(maxlen == 0)
+        int maxlen = lenOfLongSubarr(arr, n, arrsum - x);   
+        
+        // len 0 indicates no such subarray exist having sum (arrsum - x) or (x)
+        if(maxlen == 0)        
             return -1;
         else
             return (n - maxlen);
