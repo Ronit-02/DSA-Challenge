@@ -15,7 +15,7 @@ public:
             if(sum == target)          // if sum == target
                 ans++;
             // if (sum - target) is present, add its freq
-            if(hash.count(sum - target) == 1)    
+            if(hash.find(sum - target) != hash.end())    
                 ans += hash[sum - target];
             
             hash[sum]++;
