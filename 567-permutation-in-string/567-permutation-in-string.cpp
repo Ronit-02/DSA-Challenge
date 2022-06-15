@@ -1,5 +1,8 @@
 class Solution {
 public:
+    
+    // Using Sliding Window Technique!!
+    
     bool isEqual(int a[26], int b[26]){
         
         for(int i=0; i<26; i++){
