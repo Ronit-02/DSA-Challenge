@@ -17,14 +17,13 @@ public:
         int j = 0;
         while(j < nums.size()){
             
-            while(hashset.find(nums[j]) != hashset.end()){
+            while(hashset.find(nums[j]) != hashset.end()){  // if element present -> remove it
                 hashset.erase(nums[i]);
                 currSum -= nums[i];
                 i++;
             }
             
-            // if element not present -> add it
-            hashset.insert(nums[j]);
+            hashset.insert(nums[j]);   // if element not present -> add it
             currSum += nums[j];
             j++;
             
