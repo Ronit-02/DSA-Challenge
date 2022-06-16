@@ -8,7 +8,7 @@ public:
         
         vector<bool> prime(n + 1, true);
         
-        for (int i=2; i * i <= n; i++){      // i*i <= n <- optimization
+        for (int i = 2; i * i <= n; i++){      // i*i <= n <- optimization
             if (prime[i]){
                 
                 for (int p = i * i; p <= n; p += i){     // start from i*i 
