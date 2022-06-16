@@ -16,11 +16,11 @@ class Solution
         
         for(int i=0; i<n; i++){
             
-            dp[i] = 1;
-            for(int j=0; j<i; j++){
+            dp[i] = 1;     // every element is a increasing subsequence by itself
+            for(int j=0; j<i; j++){     // checking bwds in dp array for smaller value
                 
                 if(a[j] < a[i])
-                    dp[i] = max(dp[i], dp[j] + 1);
+                    dp[i] = max(dp[i], dp[j] + 1);    // dp[j] + 1 -> dp[j] subsequence + for i
             }
             
             len = max(len, dp[i]);
