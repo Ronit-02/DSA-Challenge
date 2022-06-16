@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Sieve of Eratosthenes
+    // Time complexity: O(n*log(logn))
+    
     int countPrimes(int n) {
         
         vector<bool> prime(n+1, true);
