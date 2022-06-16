@@ -17,16 +17,16 @@ public:
         int j = 0;
         while(j < nums.size()){
             
-            if(hashset.find(nums[j]) == hashset.end()){   // if element not present -> add it
-                hashset.insert(nums[j]);
-                currSum += nums[j];
-                j++;
-            }
-            else{                     // if element present -> delete first element from window
-                currSum -= nums[i];
+            while(hashset.find(nums[j]) != hashset.end()){
                 hashset.erase(nums[i]);
+                currSum -= nums[i];
                 i++;
             }
+            
+            // if element not present -> add it
+            hashset.insert(nums[j]);
+            currSum += nums[j];
+            j++;
             
             ans = max(ans, currSum);       
         }
