@@ -10,8 +10,8 @@ public:
         
         unordered_set<int> hashset;
         
-        unsigned int ans = 0;
-        unsigned int currSum = 0;
+        int ans = 0;
+        int currSum = 0;
         
         int i = 0;
         int j = 0;
