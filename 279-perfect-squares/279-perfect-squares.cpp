@@ -2,25 +2,38 @@ class Solution {
 public:
     int numSquares(int n) {
      
-        // DP Approach Tabulation Method
-        // start from no. itself and check value at each break points
-        // Time Complexity: O(N*N^1/2)
+        // Lagranges 3-Square Theorem
+        // Every natural no can be represented as sum of 4 squares
+        // So ans lies in range (1-4) -> 4 conditions
+        // Time Complexity: O(N^1/2)
         
-        vector<int> dp(n+1);
+        // For value 1
+        // Check if n is a perfect square
         
-        if(n <= 3)       // Minimum Condition
-            return n; 
+        int a = sqrt(n);
+        if(a * a == n)
+            return 1;
         
-        int i = 0;
-        while(i <= n){
-            dp[i] = i;   // for 1^2 break points, eg: 3 = 1^2 + 1^2 + 1^2
+        // For value 4
+        // Check if n is of form 4^a(8b + 7)
+        
+        while(n % 4 == 0)     // Removing 4^a terms
+            n /= 4;
+        if(n % 8 == 7)
+            return 4;
+        
+        // For value 2
+        // Break point which divides it into two perfect squares
+        
+        for(int i=1; i*i <= n; i++){
             
-            for(int j=1; j*j <= i; j++)    // for 2^2 and above break points
-                dp[i] = min(dp[i], 1 + dp[i - j*j]);
-            
-            i++;
+            int base = sqrt(n - i*i);   // other half
+            if(base*base == (n - i*i))
+                return 2;
         }
-         
-        return dp[n];
+        
+        // For value 3 (when all 3 are checked)
+        
+        return 3;
     }
 };
