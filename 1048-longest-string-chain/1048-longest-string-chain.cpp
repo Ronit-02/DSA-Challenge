@@ -19,7 +19,9 @@ public:
         for(int i=0; i < n; i++){
             
             dp[words[i]] = 1;   // can form by itself
-            for(int j=0; j < words[i].size(); j++){
+            
+             // deleting char by char and checking if predecessor exists
+            for(int j=0; j < words[i].size(); j++){  
                 
                 string predecessor = words[i].substr(0, j) + words[i].substr(j+1);
                 dp[words[i]] = max(dp[words[i]] , 1 + dp[predecessor]);
