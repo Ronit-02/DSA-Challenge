@@ -6,7 +6,7 @@ using namespace std;
 
 
  // } Driver Code Ends
-//User function Template for C++
+
 
 class Solution {
 public:
@@ -47,7 +47,7 @@ public:
             }
         }
         
-        matrix[x][y] = 1;  // marking it as unvisited -> so it can be backtracked
+        matrix[x][y] = 1;  // unmarking -> so it can be backtracked
                             
     }
 };
