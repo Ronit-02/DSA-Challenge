@@ -2,36 +2,29 @@ class Solution {
 public:
     vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
         
-        vector<vector<string>> ans;
+        sort(products.begin(), products.end());   // it will sort lexographically
+        vector<vector<string>> ans;        
         
-        sort(products.begin(), products.end());  // sorting products array in lexographically order
+        int start = 0; 
+        int end = products.size() - 1;    // start, end -> 2 pointer method
         
-        for(int i=0; i < searchWord.length(); i++){
-            
-            string str = searchWord.substr(0, i+1);
-            
-            // int s = 0;
-            // int e = products.size();
-            // int mid = s + (e-s)/2;
+        for(int i=0; i < searchWord.length(); i++) {
+                
             vector<string> temp;
-            int count = 0;
+            char ch = searchWord[i];    // we'll check char by char
             
-            for(int j=0; j < products.size() && count < 3; j++){
-                
-                int idx = 0;
-                while(idx < str.size()){
-                    if(str[idx] != products[j][idx])
-                        break;
-                    idx++;
-                }
-                
-                if(idx == str.size()){      // if substr matches -> add the result                    
-                    temp.push_back(products[j]);
-                    count++;
-                }
+            while(start <= end && products[start][i] < ch)
+                start++;                   // till it reaches word which contains ch
+            
+            while(start <= end && products[end][i] > ch)
+                end--;
+                             
+            int count = 0;            // Start -> End, we will insert only 3 strings
+            for(int j=start; j <= end && count < 3; j++, count++){
+                temp.push_back(products[j]);
             }
             
-            ans.push_back(temp);
+            ans.push_back(temp);   // adding list to the ans
             
         }
         
