@@ -22,6 +22,7 @@ public:
                 else if(mp.find(arr1[i]) == mp.end() && mp.find(arr1[j]) != mp.end())
                     swap(arr1[i], arr1[j]);
                 
+                // if no one is present -> swap according to value
                 else if(mp.find(arr1[i]) == mp.end() && mp.find(arr1[j]) == mp.end() 
                         && arr1[i] > arr1[j])
                     swap(arr1[i], arr1[j]);  
@@ -30,20 +31,5 @@ public:
         
         return arr1;
         
-        // sort(arr1.begin(), arr1.end(), comparator);
-        
     }
-    
-//     static bool comparator(int x, int y){
-//         if(mp.find(x) != mp.end() && mp.find(y) != mp.end()){   // if x and y exists in arr2
-            
-//             if(mp[x] < mp[y])     // index of x is less than y
-//                 return x < y;
-//             else
-//                 return x > y;
-//         }
-//         else{
-            
-//         }
-//     }
 };
