@@ -2,43 +2,14 @@ class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
         
-        // kth largest/smallest -> Quick Select Algorithm
-        // 2nd largest -> ascending order -> index = n-2 (or, n-2 th smallest)
-        // kth largest -> ascending order -> index = n-k (or, n-k th smallest)
-        int n = nums.size();
-        int lo = 0;
-        int hi = n-1;
+        priority_queue<int,vector<int>,greater<int>> pq;
         
-        int ans = quickSelect(nums, lo, hi, n-k);
-        
-        return ans;
-    }
-    int quickSelect(vector<int> &nums, int lo, int hi, int k){
-     
-        int pivot = nums[hi];
-        int pi = partition(nums, lo, hi, pivot);   // partition returns correct index of pivot element
-        
-        if(pi == k)          // if index is equal -> pivot is your ans
-            return pivot;
-        else if(pi > k)     // otherwise apply binary search
-            return quickSelect(nums, lo, pi-1, k);
-        else
-            return quickSelect(nums, pi+1, hi, k);
-    }
-    int partition(vector<int> &nums, int lo, int hi, int pivot){
-        
-        int i = lo;
-        int j = lo;
-        while(i <= hi){
+        for(int i=0; i < nums.size(); i++){
+            pq.push(nums[i]);    // adding
             
-            if(nums[i] <= pivot){       // if smaller swap
-                swap(nums[i], nums[j]);
-                i++;
-                j++;
-            }
-            else                       // if larger or equal -> dont swap
-                i++;
+            if(pq.size() > k)   // removing, when size increases more than k 
+                pq.pop();
         }
-        return (j-1);
+        return pq.top();    // top element is your answer
     }
 };
