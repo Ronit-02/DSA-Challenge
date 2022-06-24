@@ -1,6 +1,8 @@
 class Solution {
 public:
-    void recurPermute(vector<int> nums, int index, vector<vector<int>> &ans){
+    vector<vector<int>> ans;
+    
+    void recurPermute(vector<int> nums, int index){
         
         // base case
         if(index == nums.size()){
@@ -11,17 +13,14 @@ public:
         for(int j=index; j<nums.size(); j++){
             
             swap(nums[index], nums[j]);
-            recurPermute(nums, index+1, ans);
+            recurPermute(nums, index+1);
             swap(nums[index], nums[j]);    // Backtracking
         }
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
         
-        vector<vector<int>> ans;
-        
-        int index = 0;
-        recurPermute(nums, index, ans);
+        recurPermute(nums, 0);
         
         return ans;
     }
