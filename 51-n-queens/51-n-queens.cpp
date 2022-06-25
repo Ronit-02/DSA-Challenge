@@ -1,46 +1,54 @@
 class Solution {
 public:
-    void filldfs(vector<vector<int>> &position, int n, int row, int col, int val){
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(i==row | j==col | i+j==row+col | i-j==row-col) 
-                    position[i][j]+=val;
+    vector<vector<string>> res;
+    
+    vector<vector<string>> solveNQueens(int n) {
+        vector<string> board(n, string(n, '.'));
+        back_trace(board, 0);
+        return res;
+        
+    }
+    
+    void back_trace(vector<string>& board, int row){
+        if(row == board.size()){
+            res.push_back(board);
+            return;
+        }
+        
+        for(int col=0; col<board.size(); col++){
+            if(is_valid(row, col, board)){
+                board[row][col] = 'Q';
+                back_trace(board, row+1);
+                board[row][col] = '.';
             }
         }
     }
     
-    void queens(vector<vector<string>> &result, int n, string &s, vector<string>& curr,                       vector<vector<int>> &position, int row_val){
-        
-        if(row_val == n){
-            result.push_back(curr); 
-            return;
+    bool is_valid(int row, int col, vector<string>& board){
+        int n = board.size();
+        for(int i=0; i<row; i++){
+            if(board[i][col] == 'Q'){
+                return false;
+            }  
         }
-        for(int i=0; i<n; i++){
-            
-            if(position[row_val][i] == 0){
-                
-                s[i] = 'Q';
-                curr.push_back(s);
-                s[i] = '.';
-                filldfs(position, n, row_val, i, 1);
-                queens(result, n, s, curr, position, row_val+1);
-                filldfs(position, n, row_val, i, -1);
-                curr.pop_back();
-            }
+        
+//         for(int i=0; i<n; i++){
+//             for(int j=0; j<n; j++){
+//                 if((i+j == row+col || i-j == row-col) && board[i][j] == 'Q') {
+//                     return false;
+//                 }
+//             }
+//         }
+        
+        for(int i=row-1, j=col+1; i>=0 && j<n; i--,j++){
+            if(board[i][j] == 'Q') return false;
         }
-    }
-    vector<vector<string>> solveNQueens(int n){
         
-        vector<vector<string>> result;
+        for(int i=row-1, j=col-1; i>=0 && j>=0; i--,j--){
+            if(board[i][j] == 'Q') return false;
+        }
         
-        vector<vector<int>> position(n, vector<int> (n, 0));
-        vector<string> curr;
-        string s; 
-        for(int i=0; i<n; i++)
-            s.push_back('.');
+        return true;
         
-        queens(result, n, s, curr, position, 0);
-        
-        return result;
     }
 };
