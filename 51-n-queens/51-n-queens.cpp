@@ -1,54 +1,55 @@
-class Solution {
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class Solution{
 public:
-    vector<vector<string>> res;
+    bool isSafe(int n, int row, int col, vector<string> board){
     
-    vector<vector<string>> solveNQueens(int n) {
-        vector<string> board(n, string(n, '.'));
-        back_trace(board, 0);
-        return res;
-        
+        // Same Row
+        for(int i=0; i<n; i++){
+            if(board[row][i] == 'Q')
+                return false;
+        }
+        // Primary Diagonal
+        for(int i=row-1, j=col-1; i>=0 && j>=0; i--, j--){
+            if(board[i][j] == 'Q')
+                return false;
+        }
+        // Secondary Diagonal
+        for(int i=row+1, j=col-1; i<n && j>=0; i++, j--){
+            if(board[i][j] == 'Q')
+                return false;
+        }
+        return true;
     }
-    
-    void back_trace(vector<string>& board, int row){
-        if(row == board.size()){
-            res.push_back(board);
+    void recurnQueen(int n, int col, vector<string>& board, vector<vector<string>> &ans){
+        
+        // base case
+        if(col == n){
+            ans.push_back(board);
             return;
         }
         
-        for(int col=0; col<board.size(); col++){
-            if(is_valid(row, col, board)){
-                board[row][col] = 'Q';
-                back_trace(board, row+1);
-                board[row][col] = '.';
+        for(int row = 0; row < n; row++){      
+            if(isSafe(n, row, col, board)){
+                
+                board[row][col] = 'Q';     // Add
+                recurnQueen(n, col+1, board, ans);   // Recur
+                board[row][col] = '.';      // Backtrack
             }
         }
     }
-    
-    bool is_valid(int row, int col, vector<string>& board){
-        int n = board.size();
-        for(int i=0; i<row; i++){
-            if(board[i][col] == 'Q'){
-                return false;
-            }  
-        }
+
+    vector<vector<string>> solveNQueens(int n) {
         
-//         for(int i=0; i<n; i++){
-//             for(int j=0; j<n; j++){
-//                 if((i+j == row+col || i-j == row-col) && board[i][j] == 'Q') {
-//                     return false;
-//                 }
-//             }
-//         }
+        vector<vector<string>> ans;
+        vector<string> board(n, string(n, '.'));
+
+        int col = 0;
+        recurnQueen(n, col, board, ans);
         
-        for(int i=row-1, j=col+1; i>=0 && j<n; i--,j++){
-            if(board[i][j] == 'Q') return false;
-        }
-        
-        for(int i=row-1, j=col-1; i>=0 && j>=0; i--,j--){
-            if(board[i][j] == 'Q') return false;
-        }
-        
-        return true;
-        
+        return ans;
     }
 };
