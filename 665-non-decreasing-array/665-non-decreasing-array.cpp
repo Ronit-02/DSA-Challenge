@@ -10,10 +10,8 @@ public:
         
         int cnt = 0; 
         
-        for(int i = 1; i < nums.size(); i++){
-            
+        for(int i = 1; i < nums.size(); i++){        
             if(nums[i] < nums[i-1]){
-                
                 if(cnt >= 1) 
                     return false;
                 
