@@ -5,23 +5,21 @@ public:
         int ans = 0;
         int n = s.length();
         
-        // count frequencies of each character
-        unordered_map<char ,int> freq;
+        // freq array for characters
+        vector<int> freq(26, 0);
         for(int i=0; i<n; i++)
-            freq[s[i]]++;
+            freq[s[i] - 'a']++;
         
-        // we'll maintain a set for freq we have encountered
-        unordered_set<int> visited;
-        for(auto[k, v] : freq){
+        sort(freq.begin(), freq.end());
+        
+        for(int i=24; i>=0; i--){
             
-            // while we encounter same freq -> decrement
-            while(visited.find(v) != visited.end()){    
-                v--;
+            if(freq[i] == 0) break;
+            
+            while(freq[i] >= freq[i+1] && freq[i] > 0){
+                freq[i]--;
                 ans++;
             }
-            // otherwise -> add it in set
-            if(v > 0)
-                visited.insert(v);
         }
         
         return ans;
