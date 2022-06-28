@@ -8,15 +8,18 @@ private:
             return;
         }
         
-        if(open < n){
+        // taking open brackets
+        if(open < n){  
             comb += '(';
             recurParan(n, i+1, open+1, close, comb, ans);
-            comb.pop_back();
+            comb.pop_back();   // backtrack
         }
+        
+        // taking closing brackets
         if(close < open){
             comb += ')';
             recurParan(n, i+1, open, close+1, comb, ans);
-            comb.pop_back();
+            comb.pop_back();    // backtrack
         }
     }
 public:
