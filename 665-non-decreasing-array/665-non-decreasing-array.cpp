@@ -1,30 +1,30 @@
 class Solution {
 public:
-    bool checkPossibility(vector<int>& arr) {
-  
-        int n = arr.size();
-        vector<int> arr2(arr);
+    bool checkPossibility(vector<int>& nums) {
         
-        int cnt1 = 0;              // from starting to end
-        for(int i=1; i<n; i++){     
-            if(arr2[i] < arr2[i-1]){
-                arr2[i] = arr2[i-1];
-                cnt1++;
+        // when arr[i-1] > arr[i] -> modification req
+        // case 1: arr[i-2] <= arr[i]
+        //         arr[i-1] = arr[i]
+        // case 2: arr[i-2] > arr[i] 
+        //         arr[i] = arr[i-1]
+        
+        int cnt = 0; 
+        
+        for(int i = 1; i < nums.size(); i++){
+            
+            if(nums[i] < nums[i-1]){
+                
+                if(cnt >= 1) 
+                    return false;
+                
+                if(i == 1 || nums[i-2] <= nums[i]) 
+                    nums[i-1] = nums[i];    
+                else 
+                    nums[i] = nums[i-1];
+                
+                cnt++;
             }
         }
-        
-        int cnt2 = 0;              // from ending to start
-        for(int i=n-2; i>=0; i--){
-            if(arr[i] > arr[i+1]){
-                arr[i] = arr[i+1];
-                cnt2++;
-            }
-        }
-        
-        int cnt = min(cnt1, cnt2);
-        if(cnt <= 1)
-            return true;
-        else
-            return false;
-    }
+        return true;
+    } 
 };
