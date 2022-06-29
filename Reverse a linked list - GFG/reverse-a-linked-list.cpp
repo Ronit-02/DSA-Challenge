@@ -41,8 +41,7 @@ class Solution
             return;
         }
         
-        Node *forward = curr->next;
-        reverse(head, forward, curr);
+        reverse(head, curr->next, curr);
         curr->next = prev;
         
     }
