@@ -10,58 +10,39 @@
  */
 class Solution {
 public:
-    // Iterative Approach
-    ListNode* reverse(ListNode* head){
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        
+        // Dummy Node Approach (helps to handle edge cases)
+        
+        ListNode* dummy = new ListNode;   // dummy node
+        dummy -> next = head;
+        
+        // 1. reach node at position 'left'
+        
+        ListNode* leftPrev = dummy;
+        ListNode* curr = head;
+        for(int i=0; i<left-1; i++){
+            leftPrev = curr;
+            curr = curr -> next;
+        }
+        
+        // curr = 'left', leftPrev = 'node before left'
+        // 2. reverse from left to right 
         
         ListNode* prev = NULL;
-        ListNode* curr = head;
         ListNode* next = NULL;
-        
-        while(curr != NULL){
+        for(int i=0; i<right-left+1; i++){  
             next = curr -> next;
             curr -> next = prev;
             prev = curr;
             curr = next;
         }
         
-        return prev;
-    }
-    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        // 3. updating pointers
         
-        ListNode* prev = NULL;
-        ListNode* curr = head;
+        leftPrev -> next -> next = curr;
+        leftPrev -> next = prev;
         
-        int count = 1;
-        while(count != left){
-            prev = curr;
-            curr = curr -> next;
-            count++;
-        }
-        
-        ListNode* start = curr;
-        
-        while(count != right){
-            curr = curr -> next;
-            count++;
-        }
-        
-        ListNode* end = curr;
-        curr = curr -> next;
-        end -> next = NULL;
-        
-        ListNode* newHead = reverse(start);
-        
-        if(prev != NULL)
-            prev -> next = newHead;
-        else
-            head = newHead;
-        
-        while(newHead -> next != NULL)
-            newHead = newHead -> next;
-        
-        newHead -> next = curr;
-        
-        return head;
-        
+        return dummy -> next;
     }
 };
