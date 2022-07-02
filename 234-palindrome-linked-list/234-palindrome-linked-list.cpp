@@ -10,23 +10,58 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
+    ListNode* getMid(ListNode* head){
+       
+        // slow fast method
+        ListNode* slow = head;
+        ListNode* fast = slow -> next;
         
-        vector<int> arr;
+        while(fast != NULL && fast -> next != NULL ){
+            fast = fast -> next -> next;
+            slow = slow -> next;
+        }
+        return slow;
+    }
+    ListNode* reverse(ListNode* head){
         
+        ListNode* prev = NULL;
         ListNode* curr = head;
+        ListNode* next = NULL;
         
         while(curr != NULL){
-            arr.push_back(curr -> val);
-            curr = curr -> next;
+            next = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    bool isPalindrome(ListNode* head) {
+        
+        // when only 1 element is present
+        if(head -> next == NULL){
+            return true;
         }
         
-        int n = arr.size();
-        for(int i=0; i<n/2; i++){
+        // calculating mid
+        ListNode* mid = getMid(head);
+        
+        // reversing list after mid
+        mid -> next = reverse(mid->next);
             
-            if(arr[i] != arr[n-i-1])
+        // comparing operation
+        ListNode* curr = head;
+        ListNode* temp = mid -> next;
+        
+        while(temp != NULL){
+            if(curr -> val != temp -> val)
                 return false;
+            curr = curr -> next;
+            temp = temp -> next;
         }
+            
+        // re-reversing list after mid
+        mid -> next = reverse(mid->next);
         
         return true;
     }
