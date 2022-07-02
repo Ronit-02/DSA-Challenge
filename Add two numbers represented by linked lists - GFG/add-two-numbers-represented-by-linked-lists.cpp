@@ -57,7 +57,9 @@ struct Node {
 
 */
 
-void reverse(Node* &head){
+class Solution
+{
+    void reverse(Node* &head){
     
     Node* prev = NULL;
     Node* curr = head;
@@ -119,9 +121,6 @@ Node* add(Node* first, Node* second){
     
     return ansHead;
 }
-
-class Solution
-{
     public:
     //Function to add two numbers represented by linked list.
     struct Node* addTwoLists(struct Node* first, struct Node* second)
