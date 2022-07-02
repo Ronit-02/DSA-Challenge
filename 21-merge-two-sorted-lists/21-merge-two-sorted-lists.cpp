@@ -17,7 +17,7 @@ private:
         ListNode* curr2 = list2;
         ListNode* next2 = NULL;
         
-        if(next1 == NULL){
+        if(next1 == NULL){    // when only 1 element is present in list1
             curr1 -> next = curr2;
             return list1;
         }
