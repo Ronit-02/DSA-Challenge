@@ -9,55 +9,78 @@
  * };
  */
 class Solution {
-private:
-    ListNode* mergelist(ListNode *l1, ListNode *l2){
+public:
+    ListNode* getMid(ListNode* head){
         
-        ListNode *ptr = new ListNode;
-        ListNode *curr = ptr;
+        ListNode* slow = head;
+        ListNode* fast = head -> next;
         
-        while(l1 != NULL && l2 != NULL){
+        while(fast != NULL && fast -> next != NULL){
             
-            if(l1->val <= l2->val){
-                curr -> next = l1;
-                l1 = l1 -> next;
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        
+        return slow;
+    }
+    ListNode* merge(ListNode* left, ListNode* right){
+        
+        // base cases
+        if(left == NULL)
+            return right;
+        if(right == NULL)
+            return left;
+        
+        ListNode* ansDummy = new ListNode(-1);
+        ListNode* temp = ansDummy;
+        
+        while(left != NULL && right != NULL){
+            
+            if(left -> val <= right -> val){
+                temp -> next = left;
+                temp = left;
+                left = left -> next;
             }
             else{
-                curr -> next = l2;
-                l2 = l2 -> next;
+                temp -> next = right;
+                temp = right;
+                right = right -> next;
             }
-            curr = curr ->next;
-        }
-        if(l1 != NULL){
-            curr -> next = l1;
-            l1 = l1->next;
-        }
-        if(l2 != NULL){
-            curr -> next = l2;
-            l2 = l2 ->next;
         }
         
-        return ptr->next;
+        while(left != NULL){
+            temp -> next = left;
+            temp = left;
+            left = left -> next;
+        }
+        
+        while(right != NULL){
+            temp -> next = right;
+            temp = right;
+            right = right -> next;
+        }
+        
+        return ansDummy -> next;
     }
-public:
-    ListNode* sortList(ListNode* head){
-
+    //Function to sort the given linked list using Merge Sort.
+    ListNode* sortList(ListNode* head) {
+        
         if(head == NULL || head -> next == NULL)
             return head;
         
-        ListNode *temp = NULL;
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        while(fast !=  NULL && fast -> next != NULL){
-            temp = slow;
-            slow = slow->next;          
-            fast = fast ->next ->next;  
-        }   
-        temp -> next = NULL;            
+        // calculating mid
+        ListNode* mid = getMid(head);
         
-        ListNode* l1 = sortList(head);    
-        ListNode* l2 = sortList(slow);  
+        // breaking linked list into two halves
+        ListNode* left = head;
+        ListNode* right = mid -> next;
+        mid -> next = NULL;
         
-        return mergelist(l1, l2);               
+        left = sortList(left);
+        right = sortList(right);
+        
+        ListNode* result = merge(left, right);
+        
+        return result;
     }
 };
