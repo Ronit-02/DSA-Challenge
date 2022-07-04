@@ -23,10 +23,12 @@ bool valid(string s)
     
     for(int i=0; i<s.length(); i++){
         
+        // if opening brackets add in stack
         if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
             
             stck.push(s[i]);
         }
+        // when closing brackets remove corresponding bracket from stack
         else{
   
             if(!stck.empty()){
@@ -39,10 +41,12 @@ bool valid(string s)
                 
                     stck.pop();
                 }
+                // couldn't find corresponding bracket -> invalid case
                 else{
                     return false;
                 }
             }
+            // stack is empty -> invalid case
             else{
                 return false;
             }
