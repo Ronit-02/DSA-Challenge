@@ -20,13 +20,14 @@ class Solution
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& M, int n) 
     {
+        // 1: push all element in stack
+        
         stack<int> s;
-        //step1: push all element in stack
         for(int i=0; i<n; i++) {
             s.push(i);
         }   
         
-        //step2: get 2 elements and copare them
+        // 2: get 2 elements and copare them
         
         while(s.size() > 1) {
             
@@ -45,19 +46,13 @@ class Solution
             }
         }
         int ans = s.top();
-        //step3: single element in stack is potential celeb
-        //so verify it
         
-        int zeroCount = 0;
+        // 3: Verifying pot celeb in stack
         
         for(int i=0; i<n; i++) {
-            if(M[ans][i] == 0)
-                zeroCount++;
+            if(M[ans][i] == 1)
+                return -1;
         }
-        
-        //all zeroes
-        if(zeroCount != n)
-            return -1;
         
         //column check
         int oneCount = 0;
