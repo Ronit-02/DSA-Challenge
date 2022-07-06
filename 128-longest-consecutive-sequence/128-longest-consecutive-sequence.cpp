@@ -1,26 +1,38 @@
 class Solution {
 public:
-    int longestConsecutive(vector<int>& nums) {
+    int longestConsecutive(vector<int>& arr) {
         
-        unordered_set<int> s(nums.begin(),nums.end()); 
+        unordered_map<int, int> mp;
+        int n = arr.size();
+        
+        // 1. creating map with all elements value 1
+        
+        for(int i=0; i<n; i++){
+            mp[arr[i]] = 1;
+        }
+        
+        // 2. Marking elements which are starting of some seq. as 1
+        
+        for(int i=0; i<n; i++){
+            if(mp.find(arr[i]-1) != mp.end())
+                mp[arr[i]] = 0;
+        }
+        
+        // 3. Calculating largest sequence
         
         int ans = 0;
         
-        for(int i=0; i<nums.size(); i++){
+        for(int i=0; i<n; i++){
             
-            if(s.find(nums[i]-1) != s.end())  // if it is not starting of sequence
-                continue;
-            
-            else{
+            if(mp[arr[i]] == 1){  
                 
-                int count = 0;
-                while(s.find(nums[i]) != s.end()){  // if next sequence is there, add
-                    count++;
-                    nums[i]++;
-                }
+                int len = 1;
                 
-                ans = max(ans,count);
-            }
+                while(mp.find(arr[i] + len) != mp.end())
+                    len++;
+                
+                ans = max(ans, len);
+            } 
         }
         
         return ans;
