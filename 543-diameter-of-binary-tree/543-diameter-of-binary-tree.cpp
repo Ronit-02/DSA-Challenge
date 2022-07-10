@@ -20,6 +20,7 @@ public:
         int left = height(root -> left, ans);
         int right = height(root -> right, ans);
         
+        // for diameter, max value after traversing every node
         ans = max(ans, left + right);
         
         return 1 + max(left, right);
