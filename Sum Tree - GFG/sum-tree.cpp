@@ -101,7 +101,13 @@ class Solution
         
         // base case
         if(root == NULL){
-            pair<bool,int> p = make_pair(true,0);
+            pair<bool,int> p = make_pair(true, 0);
+            return p;
+        }
+        
+        // leaf node case
+        if(root -> left == NULL && root -> right == NULL){
+            pair<bool,int> p = make_pair(true, root->data);
             return p;
         }
         
@@ -111,12 +117,6 @@ class Solution
         
         // calculating sum
         ans.second = left.second + right.second;
-        
-        if(ans.second == 0){ // leaf node
-            ans.first = true;
-            ans.second = root -> data;
-            return ans;
-        }
         
         // calculating if sum-node
         bool curr = root -> data == ans.second;
