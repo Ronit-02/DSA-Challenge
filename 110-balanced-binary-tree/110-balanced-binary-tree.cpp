@@ -11,28 +11,36 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
+    // Function to take care of height and balancing together
+    pair<int,bool> solve(TreeNode* root){
         
-        if(root == NULL)
-            return 0;
-        
-        int left = height(root -> left);
-        int right = height(root -> right);
-        
-        return max(left, right) + 1;
-    }
-    bool isBalanced(TreeNode* root) {
+        pair<int, bool> ans;
         
         // base case
-        if(root == NULL)
-            return true;
+        if(root == NULL){
+            pair<int,bool> p = make_pair(0,true);
+            return p;
+        }
         
-        int h1 = height(root -> left);
-        int h2 = height(root -> right);
+        pair<int, bool> left = solve(root -> left);
+        pair<int, bool> right = solve(root -> right);
         
-        if(abs(h1 - h2) <= 1 && isBalanced(root->left) && isBalanced(root -> right))
-            return true;
-        else
-            return false;
+        // calculating height
+        ans.first = max(left.first, right.first) + 1;
+        
+        // calculating if balanced
+        bool diff = abs(left.first - right.first) <= 1 ? true : false;
+        
+        if(left.second && right.second && diff)
+            ans.second = true;
+        else 
+            ans.second = false;
+        
+        return ans;
+        
+    } 
+    bool isBalanced(TreeNode* root) {
+        
+        return solve(root).second;
     }
 };
