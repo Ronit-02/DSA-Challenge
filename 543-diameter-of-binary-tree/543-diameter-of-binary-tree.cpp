@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+    // with height also calculating our diameter
     int height(TreeNode* root, int &ans){
         
         if(root == NULL)
