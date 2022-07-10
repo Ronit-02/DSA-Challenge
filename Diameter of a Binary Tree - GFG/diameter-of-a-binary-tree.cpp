@@ -95,6 +95,9 @@ class Solution {
   public:
     pair<int, int> diameterFast(Node *root){
         
+        pair<int,int> ans;
+        
+        // base case
         if(root == NULL){
             pair<int, int> p = make_pair(0,0);
             return p;
@@ -103,12 +106,14 @@ class Solution {
         pair<int,int> left = diameterFast(root -> left);
         pair<int,int> right = diameterFast(root -> right);
         
-        int op1 = left.first;
-        int op2 = right.first;
-        int op3 = left.second + right.second + 1;
+        // calculating diameter
+        int op1 = left.first;   // left diameter
+        int op2 = right.first;   // right diameter
+        int op3 = left.second + right.second + 1;   // left_height + right_height + 1
         
-        pair<int,int> ans;
         ans.first = max(op1, max(op2, op3));
+        
+        // calculating height
         ans.second = max(left.second, right.second) + 1;
         
         return ans;
