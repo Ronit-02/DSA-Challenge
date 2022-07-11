@@ -107,33 +107,34 @@ class Solution
     vector<int> topView(Node *root)
     {
         // queue and map
-        queue<pair <Node*, pair<int,int>> > q;
-        map<int, map<int,vector<int>> > nodes;
+        queue< pair<Node*,int>> q;   // node and vertical 
+        map<int,int> nodes;   // map[v] = node value
         
-        q.push({root, {0,0}});
+        q.push({root, 0});
         
         // level order traversal
         while(!q.empty()){
             
             // front of queue
-            pair<Node*, pair<int,int>> temp = q.front();
+            pair<Node*,int> temp = q.front();
             q.pop();
             
-            // inserting in map
-            int v = temp.second.first;
-            int lvl = temp.second.second;
+            // inserting 1st value of vertical in map
+            int v = temp.second;
             Node *node = temp.first;
             
-            nodes[v][lvl].push_back(node -> data);
+            if(nodes.find(v) == nodes.end()){
+                nodes[v] = node -> data;
+            }
         
             // left subtree
             if(node -> left){
-                q.push({ node->left, {v-1, lvl+1} });
+                q.push({ node->left, v-1 });
             }
             
             // right subtree
             if(node -> right){
-                q.push({ node->right, {v+1, lvl+1} });
+                q.push({ node->right, v+1 });
             }
         }
 
@@ -141,15 +142,8 @@ class Solution
         vector<int> ans;
         
         for(auto i: nodes){ // for a vertical
-            
-            for(auto j: i.second){ // for a lvl
                 
-                for(auto k: j.second){  // for node -> data's
-                    ans.push_back(k);
-                    break;
-                }
-                break;
-            } 
+            ans.push_back(i.second);
         }
         
         return ans;
