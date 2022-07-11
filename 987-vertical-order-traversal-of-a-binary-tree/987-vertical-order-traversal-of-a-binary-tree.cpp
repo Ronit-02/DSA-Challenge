@@ -22,6 +22,7 @@ public:
         
         q.push({root, {0, 0}});
         
+        // level order traversal
         while(!q.empty()){
             
             // taking front value
