@@ -20,9 +20,7 @@ public:
         TreeNode *left = lowestCommonAncestor(root->left, p, q);
         TreeNode *right = lowestCommonAncestor(root->right, p, q);
      
-        // 5 possible cases
-        // if(root == left || root == right)
-        //     return root;
+        // 4 possible cases
         if(left != NULL && right != NULL)
             return root;
         else if(left != NULL && right == NULL)
