@@ -21,29 +21,24 @@ public:
             return ans;
         
         q.push(root);
-        q.push(NULL);
         
         while(!q.empty()){
             
-            TreeNode *temp = q.front();
-            q.pop();
+            int size = q.size();
+            vector<int> curr;
             
-            if(temp == NULL){ 
-                ans.push_back(nodes);
-                nodes.clear();
+            for(int i=0; i<size; i++){
                 
-                if(!q.empty())
-                    q.push(NULL);
-            }
-            else{           
-                nodes.push_back(temp -> val);
+                TreeNode *temp = q.front();
+                curr.push_back(temp -> val);
+                q.pop();
                 
-                // left and right child
                 if(temp -> left)
                     q.push(temp -> left);
                 if(temp -> right)
                     q.push(temp -> right);
-            }  
+            }
+            ans.push_back(curr);
         }
         
         return ans;
