@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode *solve(unordered_map<int, int> &in, vector<int> post, int inStart, int inEnd, int postEnd){
+    TreeNode *solve(map<int, int> &in, vector<int> post, int inStart, int inEnd, int postEnd){
     
         // base case
         if(inStart > inEnd || postEnd < 0)
@@ -33,7 +33,7 @@ public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         
         // mapping inorder values
-        unordered_map<int, int> in;
+        map<int, int> in;
         for(int i = 0; i < inorder.size(); i++){
             in[inorder[i]] = i;     // value -> index
         }
