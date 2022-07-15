@@ -28,11 +28,13 @@ public:
                 inRoot = i;
         }
         
+        int numsLeft = inRoot - inStart;
+        
         // left subtree
         root -> left = solve(in, pre, preStart + 1, inStart, inRoot - 1);
         
         // right subtree
-        root -> right = solve(in, pre, preStart + inRoot - inStart + 1, inRoot + 1, inEnd);
+        root -> right = solve(in, pre, preStart + numsLeft + 1, inRoot + 1, inEnd);
                             
         return root;
     }
