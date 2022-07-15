@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode *solve(vector<int> in, vector<int> post, int inStart, int inEnd, int postEnd){
+    TreeNode *solve(unordered_map<int, int> &in, vector<int> post, int inStart, int inEnd, int postEnd){
     
         // base case
         if(inStart > inEnd || postEnd < 0)
@@ -19,13 +19,8 @@ public:
 
         TreeNode *root = new TreeNode(post[postEnd]);
 
-        // calculating root index in inorder
-        int inRoot = 0;
-        for(int i = inStart; i <= inEnd; i++){
-            if(root -> val == in[i])
-                inRoot = i;
-        }
-
+        // map to find root index in inorder
+        int inRoot = in[root -> val];
         int numsRight = inEnd - inRoot;
 
         // left subtree
@@ -37,8 +32,14 @@ public:
     }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         
+        // mapping inorder values
+        unordered_map<int, int> in;
+        for(int i = 0; i < inorder.size(); i++){
+            in[inorder[i]] = i;     // value -> index
+        }
+        
         int n = inorder.size();
-        return solve(inorder, postorder, 0, n-1, n-1);
+        return solve(in, postorder, 0, n-1, n-1);
     }
     
 };
