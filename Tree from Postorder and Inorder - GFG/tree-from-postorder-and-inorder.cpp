@@ -62,7 +62,7 @@ struct Node
         left = right = NULL;
     }
 };*/
-Node *solve(int in[], int post[], int inStart, int inEnd, int postEnd, int n){
+Node *solve(int in[], int post[], int inStart, int inEnd, int postEnd){
     
     // base case
     if(inStart > inEnd || postEnd < 0)
@@ -80,9 +80,9 @@ Node *solve(int in[], int post[], int inStart, int inEnd, int postEnd, int n){
     int numsRight = inEnd - inRoot;
     
     // left subtree
-    root -> left = solve(in, post, inStart, inRoot-1, postEnd-numsRight-1, n);
+    root -> left = solve(in, post, inStart, inRoot-1, postEnd-numsRight-1);
     // right subtree
-    root -> right = solve(in, post, inRoot+1, inEnd, postEnd-1, n);
+    root -> right = solve(in, post, inRoot+1, inEnd, postEnd-1);
     
     return root;
 }
@@ -90,5 +90,5 @@ Node *solve(int in[], int post[], int inStart, int inEnd, int postEnd, int n){
 //Function to return a tree created from postorder and inoreder traversals.
 Node *buildTree(int in[], int post[], int n) {
     
-    return solve(in, post, 0, n-1, n-1, n);
+    return solve(in, post, 0, n-1, n-1);
 }
