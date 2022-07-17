@@ -11,23 +11,33 @@
  */
 class Solution {
 public:
-    // Recursive Approach
-    void solve(TreeNode* root, TreeNode* &prev){
-        
-        if(root == NULL)
-            return;
-        
-        solve(root -> right, prev);
-        solve(root -> left, prev);
-        
-        root -> right = prev;
-        root -> left = NULL;
-        
-        prev = root;
-    }
+    // Morris Traversal Approach
     void flatten(TreeNode* root) {
         
+        // Intuition: linking left subtree's rightmost node with current's right node
+        // and repeating the process
+        
+        TreeNode *curr = root;
         TreeNode *prev = NULL;
-        solve(root, prev);
+        
+        while(curr != NULL){
+            
+            // if left subtree exists
+            if(curr -> left != NULL){       
+                
+                // prev = left subtree rightmost node
+                prev = curr -> left;
+                while(prev -> right)
+                    prev = prev -> right;        
+            
+                // linking prev with curr -> right
+                prev -> right = curr -> right;
+                curr -> right = curr -> left;
+                curr -> left  = NULL;
+            }
+            
+            // move to right
+            curr = curr -> right;
+        }
     }
 };
