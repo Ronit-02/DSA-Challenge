@@ -11,28 +11,17 @@
  */
 class Solution {
 public:
-    bool helper(TreeNode* left, TreeNode *right){
+    bool helper(TreeNode* left, TreeNode* right){
         
-        // null condition
-        if(left == NULL || right == NULL)
-            return left == right;
+        if(left == NULL && right == NULL) return true;
+        if(left == NULL || right == NULL) return false;
         
-        // both have nodes, check for value
-        if(left -> val != right -> val)
-            return false;
-        
-        return helper(left -> left, right -> right) 
-                && 
-                helper(left -> right, right -> left);
+        return (left -> val == right -> val) && helper(left -> left, right -> right) 
+                && helper(left -> right, right -> left);
     }
     // Recursive Approach
-    // Root Left Right for left subtree
-    // Root Right Left for right subtree
     bool isSymmetric(TreeNode* root) {
         
-        if(root == NULL)
-            return true;
-        else
-            return helper(root -> left, root -> right);
+	    return helper(root, root);   
     }
 };
