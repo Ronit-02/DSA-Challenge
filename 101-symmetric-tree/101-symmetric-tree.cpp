@@ -13,15 +13,30 @@ class Solution {
 public:
     bool helper(TreeNode* left, TreeNode* right){
         
-        if(left == NULL && right == NULL) return true;
-        if(left == NULL || right == NULL) return false;
+        queue <pair<TreeNode*, TreeNode*>> q;
+        q.push({left, right});
         
-        return (left -> val == right -> val) && helper(left -> left, right -> right) 
-                && helper(left -> right, right -> left);
+        while(!q.empty()){
+            
+            pair<TreeNode*, TreeNode*> curr = q.front();
+            q.pop();
+            
+            TreeNode* l = curr.first;
+            TreeNode* r = curr.second;
+            
+            if(!l && !r) continue;   // both NULL
+            if(!l || !r) return false;  // one is NULL
+            if(l->val != r->val) return false;  // value not equal
+            
+            q.push({l->left, r->right});
+            q.push({l->right, r->left});
+        }
+        
+        return true;
     }
-    // Recursive Approach
+    // BFS - Iterative Approach
     bool isSymmetric(TreeNode* root) {
         
-	    return helper(root, root);   
+        return helper(root -> left, root -> right);
     }
 };
