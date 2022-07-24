@@ -18,14 +18,15 @@ public:
         
         TreeNode *curr = root;
         int ans = 0;
-        int i = 0;
         
         while(curr != NULL){
             
             // left subtree not present
             if(curr -> left == NULL){
-                if(++i == k)
+                
+                if(--k == 0)            // condition
                     ans = curr->val;
+                
                 curr = curr -> right;
             }
             
@@ -45,8 +46,10 @@ public:
                 }
                 // remove link
                 else{
-                    if(++i == k)
+                    
+                    if(--k == 0)           // condition
                         ans = curr->val;
+                    
                     prev -> right = NULL;
                     curr = curr -> right;
                 }
