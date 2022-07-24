@@ -11,6 +11,8 @@
  */
 class Solution {
 public:
+    // TC: O(N)
+    // SC: O(N)
     void inorder(TreeNode *root, vector<int> &in){
         
         if(root == NULL)
