@@ -21,32 +21,32 @@
  */
 class Solution {
 public:
-    TreeNode *construct(vector<int>&nums,int start,int end)
-    {
-        if(start>end)
-        {
+    TreeNode *helper(vector<int> &arr ,int s, int e){
+        
+        // base case
+        if(s > e) {
             return NULL;
         }
-        int mid=(start+end)/2;
-        TreeNode *root=new TreeNode(nums[mid]);
+        
+        int mid = (s + e)/2;
+        TreeNode *root = new TreeNode(arr[mid]);
 
-        root->left=construct(nums,start,mid-1);
-        root->right=construct(nums,mid+1,end);
+        root->left = helper(arr, s, mid-1);
+        root->right = helper(arr, mid+1, e);
 
         return root;
     }
+    // TC: O(n)
+    // SC: O(n)
+    TreeNode* sortedListToBST(ListNode* head) {
 
-    TreeNode* sortedListToBST(ListNode* head) 
-    {
+        vector<int> arr;
 
-        vector<int>nums;
-
-        while(head!=NULL)
-        {
-            nums.push_back(head->val);
-            head=head->next;
+        while(head != NULL) {
+            arr.push_back(head -> val);
+            head = head->next;
         }
 
-        return construct(nums,0,nums.size()-1);
+        return helper(arr, 0, arr.size()-1);
     }
 };
