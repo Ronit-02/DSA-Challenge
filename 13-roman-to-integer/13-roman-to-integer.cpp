@@ -1,19 +1,39 @@
 class Solution {
 public:
-    int romanToInt(string s) {
+    
+    int helper(char curr, char prev){
         
-        unordered_map<char, int> mp{
-            {'I',1}, {'V',5}, {'X',10}, 
-            {'L',50}, {'C',100}, {'D',500}, {'M',1000}
-        };
+        switch (curr) {
+            case 'I':
+                return 1;
+            case 'V':
+                return prev == 'I' ? 3 : 5;
+            case 'X':
+                return prev == 'I' ? 8 : 10;
+            case 'L':
+                return prev == 'X' ? 30 : 50;
+            case 'C':
+                return prev == 'X' ? 80 : 100;
+            case 'D':
+                return prev == 'C' ? 300 : 500;
+            case 'M':
+                return prev == 'C' ? 800 : 1000;
+            default:
+                return 0;
+        }
+    }
+    
+    int romanToInt(string s) {
     
         int ans = 0;
+        char prev = '0';
+        char curr = '0';
+        
         for(int i=0; i<s.size(); i++){
             
-            if(mp[s[i]] < mp[s[i+1]])
-                ans -= mp[s[i]];
-            else
-                ans += mp[s[i]];
+            curr = s[i];
+            ans += helper(curr, prev);
+            prev = curr;
         }
         return ans;
     }
