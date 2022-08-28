@@ -1,7 +1,7 @@
 class Solution {
 private:
     // Recursive Approach
-    void helper(vector<vector<int>> &vis, vector<vector<char>>& grid, int i, int j){
+    void dfs(vector<vector<int>> &vis, vector<vector<char>>& grid, int i, int j){
         
         // out of bounds
         if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || grid[i][j] == '0')
@@ -12,10 +12,10 @@ private:
             return;
         
         vis[i][j] = 1;
-        helper(vis, grid, i-1, j);    // up
-        helper(vis, grid, i+1, j);    // down
-        helper(vis, grid, i, j-1);    // left
-        helper(vis, grid, i, j+1);    // right
+        dfs(vis, grid, i-1, j);    // up
+        dfs(vis, grid, i+1, j);    // down
+        dfs(vis, grid, i, j-1);    // left
+        dfs(vis, grid, i, j+1);    // right
     }
     
 public:
@@ -32,7 +32,7 @@ public:
             for(int j=0; j<n; j++){
                 if(vis[i][j] == 0 && grid[i][j] != '0'){
                     ans++;
-                    helper(vis, grid, i, j);
+                    dfs(vis, grid, i, j);
                 }
             }
         }
