@@ -12,26 +12,26 @@
 class Solution {
 public:
     // DFS Algorithm
-    void helper(TreeNode* root, int &nodes, int Max){
+    int nodes = 0;
+    void dfs(TreeNode* root, int currMax){
         
         if(root == NULL)
             return;
         
-        if(root->val >= Max){
+        if(root->val >= currMax){
             nodes++;
-            Max = root->val;
+            currMax = root->val;
         }
         
-        helper(root->left, nodes, Max);
-        helper(root->right, nodes, Max);
+        dfs(root->left, currMax);
+        dfs(root->right, currMax);
     }
     int goodNodes(TreeNode* root) {
         
         if(root == NULL)
             return 0;
         
-        int nodes = 0;
-        helper(root, nodes, INT_MIN);
+        dfs(root, INT_MIN);
         
         return nodes;
     }
