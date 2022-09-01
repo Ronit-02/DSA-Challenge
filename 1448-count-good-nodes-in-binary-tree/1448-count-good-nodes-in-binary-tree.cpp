@@ -12,27 +12,22 @@
 class Solution {
 public:
     // DFS Algorithm
-    int nodes = 0;
-    void dfs(TreeNode* root, int currMax){
-        
-        if(root == NULL)
-            return;
-        
-        if(root->val >= currMax){
-            nodes++;
-            currMax = root->val;
-        }
-        
-        dfs(root->left, currMax);
-        dfs(root->right, currMax);
-    }
-    int goodNodes(TreeNode* root) {
+    int dfs(TreeNode* root, int Max){
         
         if(root == NULL)
             return 0;
         
-        dfs(root, INT_MIN);
+        Max = max(Max, root->val);
         
-        return nodes;
+        if(root->val >= Max){
+            return 1 + dfs(root->left, Max) + dfs(root->right, Max);
+        }
+        else{
+            return dfs(root->left, Max) + dfs(root->right, Max);
+        }
+    }
+    int goodNodes(TreeNode* root) {
+        
+        return dfs(root, INT_MIN);
     }
 };
