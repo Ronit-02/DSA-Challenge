@@ -1,42 +1,53 @@
 class Solution {
 public:
-    string pushDominoes(string s) {
-    
-    int n = s.size();
-    int r=-1;
-    
-    for(int i=0;i<n;i++){
+    string pushDominoes(string dominoes) {
         
-        if(s[i]=='L'){                                 
-            if(r==-1){                                  //s[i]=='L' && r==-1
-                for(int j=i-1;j>=0 && s[j]=='.';j--){   //update all dominoes to left beginning from j=i-1 to j>=0
-                    s[j]='L';
-                }
+        int n = dominoes.length();
+        
+        vector<float> trav(n, 0);
+        float force = 1;
+        
+        // left traversal
+        for(int i=n-1; i>0; i--){
+            
+            if(dominoes[i] == '.' && trav[i] < 0){ 
+                trav[i-1] -= force/2;
             }
-            else{                                      //s[i]=='L' && r!=-1
-                for(int j=r+1,k=i-1;j<k;j++,k--){      //update all dominoes lying between k=r+1 and j=i-1
-                    s[j]='R';
-                    s[k]='L';
-                }
-                r=-1;        //important step update r = -1
+            if(dominoes[i] == 'L'){
+                force = 1;
+                trav[i] -= force;
+                trav[i-1] -= force/2;
             }
+            force /= 2;   // intensity reduces
         }
-        else if(s[i]=='R'){                            //s[i]=='R' && r!=-1
-            if(r!=-1){                                 //update all dominoes lying right to j=r+1 till i
-                for(int j=r+1;j<i;j++){
-                    s[j]='R';
-                }
+        
+        force = 1;
+        
+        // right traversal
+        for(int i=0; i<n-1; i++){
+            
+            if(dominoes[i] == '.' && trav[i] > 0){
+                trav[i+1] += force/2;
             }
-            r=i;             //update r since r is found
+            if(dominoes[i] == 'R'){
+                force = 1;
+                trav[i] += force;
+                trav[i+1] += force/2;
+            }
+            force /= 2;   // intensity reduces
         }
+        
+        // edge cases
+        if(dominoes[0] == 'L') trav[0] = -1;
+        if(dominoes[n-1] == 'R') trav[n-1] = 1;
+            
+        
+        for(int i=0; i<n; i++){
+            if(trav[i] < 0) dominoes[i] = 'L';
+            else if(trav[i] == 0) dominoes[i] = '.';
+            else dominoes[i] = 'R';
+        }
+        
+        return dominoes;
     }
-    
-    if(r!=-1){                     //if you have traversed complete string and r!=-1, then update all dominoes
-        for(int j=r+1;j<n;j++) {   //beginning from r+1 to n to 'R'
-            s[j]='R';
-        }
-    }
-    
-    return s;   
-}
 };
