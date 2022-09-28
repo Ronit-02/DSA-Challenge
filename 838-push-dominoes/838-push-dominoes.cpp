@@ -1,5 +1,8 @@
 class Solution {
 public:
+    
+    // Intuition: 2 pointer approach for left and right forces,
+    // idx represents force
     string pushDominoes(string dominoes) {
         
         int n = dominoes.length();
