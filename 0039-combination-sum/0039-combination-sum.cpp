@@ -1,36 +1,31 @@
 class Solution {
-private:
-    void recurCombSum(vector<int> &candidates, int target, vector<int> comb, vector<vector<int>> &ans, int i){
+public:
+    void helper(vector<int>& nums, int target, int index, vector<int> curr, vector<vector<int>> &ans){
         
-        // base case
-        if(i == candidates.size()){
-            if(target == 0){
-                // sort(comb.begin(), comb.end());
-                ans.push_back(comb);
-            }
+        // base cases
+        if(target == 0){
+            ans.push_back(curr);
+            return;
+        }
+        if(target < 0){
             return;
         }
         
-        // take
-        if(candidates[i] <= target){
-
-            comb.push_back(candidates[i]);
-            recurCombSum(candidates, target-candidates[i], comb, ans, i);
-            comb.pop_back();
+        for(int i=index; i<nums.size(); i++){
+            // add
+            curr.push_back(nums[i]);
+            // recur
+            helper(nums, target - nums[i], i, curr, ans);
+            // remove
+            curr.pop_back();  // backtrack
         }
-        
-        // not take
-        recurCombSum(candidates, target, comb, ans, i+1);
-        
     }
-public:
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-  
+    vector<vector<int>> combinationSum(vector<int>& nums, int target) {
+        
         vector<vector<int>> ans;
-        vector<int> comb;
+        vector<int> curr;
         
-        recurCombSum(candidates, target, comb, ans, 0);
-        
+        helper(nums, target, 0, curr, ans);
         return ans;
     }
 };
